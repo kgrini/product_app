@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="container-fluid">
+    <h2><%= content_for :title, 'Dashboard' %></h2>
+  </div>
+</div>
+<div class="row">
+  <div class="container-fluid">
+    <ul id="myTab" class="nav nav-tabs">
+      <li class="active"><a href="#">Latest product feeds</a></li>
+      <li><a href="#">Latest imports</a></li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="container-fluid">
+    <table class="table table-hover">
+      <tr>
+        <th>
+          #
+        </th>
+        <th>
+          Image
+        </th>
+        <th>
+          Title
+        </th>
+        <th>
+          Description
+        </th>
+        <th>
+          Price
+        </th>
+        <th>
+          Actions
+        </th>
+      </tr>
+      <% @latest_product_feeds.each do |product_feed| %>
+          <tr>
+            <td>
+              <%= product_feed.id %>
+            </td>
+            <td>
+              <img src="<%= product_feed.image_url %>" width="50" height="auto" class="img-thumbnail">
+            </td>
+            <td>
+              <%= product_feed.title %>
+            </td>
+            <td>
+              <%= product_feed.description %>
+            </td>
+            <td>
+              <%= product_feed.currency_price %>
+            </td>
+            <td>
+              <%=
+                link_to 'Show',
+                        product_feed_path(product_feed),
+                        class: 'btn btn-default btn-sm'
+              %>
+              <%=
+                link_to 'Edit',
+                        edit_product_feed_path(product_feed),
+                        class: 'btn btn-default btn-sm'
+              %>
+              <%=
+                link_to 'Destroy',
+                        product_feed_path(product_feed),
+                        :method => :delete,
+                        class: 'btn btn-danger btn-sm'
+              %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

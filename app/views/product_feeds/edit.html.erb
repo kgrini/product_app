@@ -1,6 +1,4 @@
-<h1>Editing product_feed</h1>
-
+<h2 style="margin-left: 20px;"><%= content_for :title, 'Editing product feed' %></h2>
 <%= render 'form' %>
 
-<%= link_to 'Show', @product_feed %> |
-<%= link_to 'Back', product_feeds_path %>
+<%= link_to 'Back', product_feeds_path, class: 'btn btn-default' %>

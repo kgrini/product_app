@@ -1,28 +1,26 @@
 class ProductFeedsController < ApplicationController
   before_action :set_product_feed, only: [:show, :edit, :update, :destroy]
 
-  # GET /product_feeds
-  # GET /product_feeds.json
   def index
-    @product_feeds = ProductFeed.all
+    @product_feeds =
+      ProductFeed
+      .where(deleted: false)
+      .paginate(
+        page: params[:page],
+        per_page: 30
+      )
   end
 
-  # GET /product_feeds/1
-  # GET /product_feeds/1.json
   def show
   end
 
-  # GET /product_feeds/new
   def new
     @product_feed = ProductFeed.new
   end
 
-  # GET /product_feeds/1/edit
   def edit
   end
 
-  # POST /product_feeds
-  # POST /product_feeds.json
   def create
     @product_feed = ProductFeed.new(product_feed_params)
 
@@ -37,8 +35,6 @@ class ProductFeedsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /product_feeds/1
-  # PATCH/PUT /product_feeds/1.json
   def update
     respond_to do |format|
       if @product_feed.update(product_feed_params)
@@ -51,10 +47,11 @@ class ProductFeedsController < ApplicationController
     end
   end
 
-  # DELETE /product_feeds/1
-  # DELETE /product_feeds/1.json
   def destroy
-    @product_feed.destroy
+    @product_feed.update_attributes(
+      deleted: true,
+      deleted_at: Time.now
+    )
     respond_to do |format|
       format.html { redirect_to product_feeds_url, notice: 'Product feed was successfully destroyed.' }
       format.json { head :no_content }
@@ -62,13 +59,21 @@ class ProductFeedsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product_feed
-      @product_feed = ProductFeed.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_feed_params
-      params.fetch(:product_feed, {})
-    end
+  def set_product_feed
+    @product_feed = ProductFeed.find(params[:id])
+  end
+
+  def product_feed_params
+    params
+      .require(:product_feed)
+      .permit(
+        :title,
+        :description,
+        :image_url,
+        :price,
+        :affiliate_code,
+        :campaign_name
+      )
+  end
 end

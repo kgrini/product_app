@@ -27,7 +27,9 @@ ActiveRecord::Schema.define(version: 20170619153356) do
     t.string   "title"
     t.text     "description"
     t.integer  "price"
-    t.string   "source"
+    t.string   "image_url"
+    t.string   "source",         default: "desktop"
+    t.string   "campaign_name"
     t.string   "import_id"
     t.boolean  "deleted",        default: false
     t.datetime "deleted_at"

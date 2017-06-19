@@ -1,4 +1,57 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="container-fluid">
+    <h2 style="margin-left: 20px;"><%= content_for :title, 'Show product feed' %></h2>
+    <p id="notice"><%= notice %></p>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_product_feed_path(@product_feed) %> |
-<%= link_to 'Back', product_feeds_path %>
+<div class="row">
+ <div class="container-fluid">
+   <table class="table table-bordered">
+     <tr>
+       <td>Image</td>
+       <td>
+         <img src="<%= @product_feed.image_url %>" width="200" height="auto">
+       </td>
+     </tr>
+     <tr>
+       <td>
+         Title
+       </td>
+       <td>
+         <%= @product_feed.title %>
+       </td>
+     </tr>
+     <tr>
+       <td>
+         Price
+       </td>
+       <td>
+         <%= @product_feed.currency_price %>
+       </td>
+     </tr>
+     <tr>
+       <td>
+         Campaign name
+       </td>
+       <td>
+         <%= @product_feed.campaign_name %>
+       </td>
+     </tr>
+     <tr>
+       <td>
+         Affiliate code
+       </td>
+       <td>
+         <%= @product_feed.affiliate_code %>
+       </td>
+     </tr>
+   </table>
+ </div>
+</div>
+<div class="row">
+  <div class="container-fluid">
+    <%= link_to 'Edit', edit_product_feed_path(@product_feed), class: 'btn btn-default' %>
+    <%= link_to 'Back', product_feeds_path, class: 'btn btn-default' %>
+  </div>
+</div>
