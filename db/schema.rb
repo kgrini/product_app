@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20170619153356) do
   create_table "imports", force: true do |t|
     t.string   "title"
     t.string   "filename"
+    t.string   "state",      default: "new"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

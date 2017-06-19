@@ -5,14 +5,8 @@ class ImportsController < ApplicationController
     @imports = Import.all
   end
 
-  def show
-  end
-
   def new
     @import = Import.new
-  end
-
-  def edit
   end
 
   def create
@@ -27,6 +21,10 @@ class ImportsController < ApplicationController
         format.json { render json: @import.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def start
+    @import
   end
 
   def update
@@ -50,11 +48,17 @@ class ImportsController < ApplicationController
   end
 
   private
-    def set_import
-      @import = Import.find(params[:id])
-    end
 
-    def import_params
-      params.fetch(:import, {})
-    end
+  def set_import
+    @import = Import.find(params[:id])
+  end
+
+  def import_params
+    params
+      .require(:import)
+      .permit(
+        :title,
+        :file_name
+      )
+  end
 end

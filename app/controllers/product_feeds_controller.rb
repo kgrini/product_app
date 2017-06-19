@@ -2,9 +2,10 @@ class ProductFeedsController < ApplicationController
   before_action :set_product_feed, only: [:show, :edit, :update, :destroy]
 
   def index
+    # binding.pry
     @product_feeds =
       ProductFeed
-      .where(deleted: false)
+      .visible
       .paginate(
         page: params[:page],
         per_page: 30
