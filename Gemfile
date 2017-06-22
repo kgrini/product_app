@@ -19,6 +19,8 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'will_paginate-bootstrap'
 
+gem 'mailgun-ruby', '~>1.1.6'
+
 group :doc do
   gem 'sdoc', '~> 0.4.0'
 end

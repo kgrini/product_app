@@ -1,4 +1,8 @@
 <h2 style="margin-left: 20px;"><%= content_for :title, 'Listing product feeds' %></h2>
+
+<% flash.each do |name, msg| -%>
+  <%= content_tag :div, msg, class: name %>
+<% end %>
 <div class="row">
   <div class="container-fluid">
     <table class="table table-hover">
@@ -17,55 +21,22 @@
           Image
         </th>
         <th>
-          Title
+          <%= link_to 'Title', product_feeds_path(order: 'title') %>
         </th>
         <th>
-          Description
+          <%= link_to 'Description', product_feeds_path(order: 'description') %>
         </th>
         <th>
-          Price
+          <%= link_to 'Price', product_feeds_path(order: 'price') %>
         </th>
         <th>
-          Campaign name
+          <%= link_to 'Campaign name', product_feeds_path(order: 'campaign_name') %>
         </th>
         <th>
           Actions
         </th>
       </tr>
-      <%= form_tag product_feeds_path do |f| %>
-        <tr>
-          <td>
-            &nbsp;
-          </td>
-          <td>
-            &nbsp;
-          </td>
-          <td>
-            <%= text_field_tag :title, params[:title], class: 'form-control' %>
-          </td>
-          <td>
-            <%= text_field_tag :description, params[:description], class: 'form-control' %>
-          </td>
-          <td>
-            <%= text_field_tag :price, params[:price], class: 'form-control' %>
-          </td>
-          <td>
-            <%= text_field_tag :campaign_name, params[:campaign_name], class: 'form-control' %>
-          </td>
-          <td>
-            <%=
-              submit_tag 'Find',
-              class: 'btn btn-default btn-sm'
-            %>
-            <%=
-              link_to 'Show all',
-              product_feeds_path,
-              class: 'btn btn-default btn-sm'
-            %>
-            <%= check_box_tag 'deleted', params[:deleted] %>
-          </td>
-        </tr>
-      <% end %>
+      <%= render 'search_form' %>
       <% @product_feeds.each do |product_feed| %>
         <tr>
           <td>
@@ -81,7 +52,7 @@
             <%= product_feed.description %>
           </td>
           <td>
-            <%= product_feed.description %>
+            <%= product_feed.price %>
           </td>
           <td>
             <%= product_feed.campaign_name %>
@@ -122,6 +93,5 @@
   <div class="container-fluid">
     <%= link_to 'New Product feed', new_product_feed_path, class: 'btn btn-default' %>
     <%= link_to 'Import feeds', imports_path, class: 'btn btn-default' %>
-    <%= link_to 'Back', root_path, class: 'btn btn-default' %>
   </div>
 </div>

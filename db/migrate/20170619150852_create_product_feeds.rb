@@ -9,7 +9,6 @@ class CreateProductFeeds < ActiveRecord::Migration
       t.string     :campaign_name
       t.string     :import_id
       t.boolean    :deleted,       default: false
-      t.datetime   :deleted_at
       t.string     :affiliate_code
       t.timestamps
     end

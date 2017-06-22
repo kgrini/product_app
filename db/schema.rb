@@ -11,15 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619153356) do
+ActiveRecord::Schema.define(version: 20170622175116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "histories", force: true do |t|
+    t.integer  "product_feed_id"
+    t.datetime "updated"
+    t.datetime "deleted"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "imports", force: true do |t|
     t.string   "title"
     t.string   "filename"
-    t.string   "state",      default: "new"
+    t.string   "content_type"
+    t.binary   "file_contents"
+    t.string   "state",         default: "new"
+    t.datetime "imported_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -33,7 +44,6 @@ ActiveRecord::Schema.define(version: 20170619153356) do
     t.string   "campaign_name"
     t.string   "import_id"
     t.boolean  "deleted",        default: false
-    t.datetime "deleted_at"
     t.string   "affiliate_code"
     t.datetime "created_at"
     t.datetime "updated_at"

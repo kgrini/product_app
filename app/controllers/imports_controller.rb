@@ -1,5 +1,5 @@
 class ImportsController < ApplicationController
-  before_action :set_import, only: [:show, :edit, :update, :destroy]
+  before_action :set_import, only: [:edit, :update, :destroy, :start]
 
   def index
     @imports = Import.all
@@ -11,20 +11,29 @@ class ImportsController < ApplicationController
 
   def create
     @import = Import.new(import_params)
-
-    respond_to do |format|
-      if @import.save
-        format.html { redirect_to @import, notice: 'Import was successfully created.' }
-        format.json { render :show, status: :created, location: @import }
-      else
-        format.html { render :new }
-        format.json { render json: @import.errors, status: :unprocessable_entity }
-      end
+    if @import.save
+      redirect_to action: :index
+    else
+      render :new
     end
   end
 
   def start
-    @import
+    begin
+      @import.parse_file
+    rescue CSV::MalformedCSVError => e
+      error = "Some problem appeared csv #{e}"
+    else
+      ProductFeed.create_records(@import.parse_file)
+    end
+
+    if error.nil?
+       @import.finished
+      redirect_to imports_path
+    else
+      flash[:notice] = error
+      redirect_to imports_path
+    end
   end
 
   def update
@@ -58,7 +67,7 @@ class ImportsController < ApplicationController
       .require(:import)
       .permit(
         :title,
-        :file_name
+        :file
       )
   end
 end

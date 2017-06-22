@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  </head>
+  <body>
+    <h1>
+      <%= @import.id %> import been successfully imported
+    </h1>
+    <p>
+      Total imported product feeds: <%= @product_feed_count + @total_deleted %>
+    </p>
+    <p>
+      Total changed: <%= @total_updated %>
+    </p>
+    <p>
+      Total deleted: <%= @total_deleted %>
+    </p>
+  <%= binding.pry %>
+  </body>
+</html>

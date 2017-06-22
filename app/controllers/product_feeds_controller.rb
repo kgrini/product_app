@@ -2,10 +2,11 @@ class ProductFeedsController < ApplicationController
   before_action :set_product_feed, only: [:show, :edit, :update, :destroy]
 
   def index
-    # binding.pry
     @product_feeds =
       ProductFeed
       .visible
+      .where(search_criterias)
+      .order(params[:order])
       .paginate(
         page: params[:page],
         per_page: 30
@@ -49,10 +50,7 @@ class ProductFeedsController < ApplicationController
   end
 
   def destroy
-    @product_feed.update_attributes(
-      deleted: true,
-      deleted_at: Time.now
-    )
+    @product_feed.destroy
     respond_to do |format|
       format.html { redirect_to product_feeds_url, notice: 'Product feed was successfully destroyed.' }
       format.json { head :no_content }
@@ -67,14 +65,15 @@ class ProductFeedsController < ApplicationController
 
   def product_feed_params
     params
-      .require(:product_feed)
-      .permit(
-        :title,
-        :description,
-        :image_url,
-        :price,
-        :affiliate_code,
-        :campaign_name
-      )
+    .require(:product_feed)
+    .permit(
+      :title,
+      :description,
+      :image_url,
+      :price,
+      :affiliate_code,
+      :campaign_name
+    )
   end
+
 end
