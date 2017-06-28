@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ProductApp</title>
+  <title><%= "#{content_for(:title)} | Product app" %></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <%= csrf_meta_tags %>
+  <script>
+    <% if params[:notice].present? %>
+    alert(<%= params[:notice] %>);
+    <% end %>
+  </script>
+
 </head>
 <body>
+<%= render 'layouts/navigation_bar' %>
+<h1><%= yield(:title) %></h1>
 
 <%= yield %>
 
