@@ -76,4 +76,7 @@ class ProductFeedsController < ApplicationController
     )
   end
 
+  def search_criterias
+    ProductApp::Search.criterias(params, ProductFeed)
+  end
 end

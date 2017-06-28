@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20170622175116) do
   create_table "product_feeds", force: true do |t|
     t.string   "title"
     t.text     "description"
-    t.integer  "price"
+    t.decimal  "price"
     t.string   "image_url"
     t.string   "source",         default: "desktop"
     t.string   "campaign_name"

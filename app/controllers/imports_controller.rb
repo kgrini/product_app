@@ -20,18 +20,18 @@ class ImportsController < ApplicationController
 
   def start
     begin
-      @import.parse_file
+      parsed_file = @import.parse_file
     rescue CSV::MalformedCSVError => e
-      error = "Some problem appeared csv #{e}"
-    else
-      ProductFeed.create_records(@import.parse_file)
+      error = "Some problem appeared #{e}"
     end
 
-    if error.nil?
-       @import.finished
+    if error
+      flash[:notice] = error
       redirect_to imports_path
     else
-      flash[:notice] = error
+      ProductFeed.create_records(parsed_file)
+
+      @import.update_state_and_send_result
       redirect_to imports_path
     end
   end

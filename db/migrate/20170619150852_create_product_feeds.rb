@@ -3,7 +3,7 @@ class CreateProductFeeds < ActiveRecord::Migration
     create_table :product_feeds do |t|
       t.string     :title
       t.text       :description
-      t.integer    :price
+      t.decimal    :price
       t.string     :image_url
       t.string     :source,        default: 'desktop'
       t.string     :campaign_name

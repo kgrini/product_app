@@ -13,7 +13,7 @@ class Import < ActiveRecord::Base
   end
 
   validates :title, presence: true
-  validate  :file_presence, :file_format
+  validate  :file_presence, :file_format, :validate_csv_content
 
   def file_presence
     if self.filename.blank?
@@ -41,13 +41,20 @@ class Import < ActiveRecord::Base
     )
   end
 
-  def finished
+  def update_state_and_send_result
     update_attributes(
       imported_at: Time.now,
       state: 'done'
     )
 
     ResultEmail.prepare(self).deliver
+  end
+
+
+  def validate_csv_content
+    if self.file_contents.blank?
+      errors[:file] << "Csv content could not be empty"
+    end
   end
 
   private
